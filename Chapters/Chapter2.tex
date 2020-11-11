@@ -5,7 +5,7 @@
 %----------------------------------------------------------------------------------------
 %	SECTION 1
 %----------------------------------------------------------------------------------------
-En este capítulo introduce al lector a las tecnologias que fueron utilizadas y también se establecen los requerimientos y la planificación del proyecto llevado a cabo.
+En este capítulo se presentan al lector las tecnologias que fueron utilizadas y también se establecen los requerimientos y la planificación del trabajo llevado a cabo.
 
 
 \section{Requerimientos}
@@ -53,8 +53,8 @@ Control de versiones:
 \end{itemize}
 
 \section{Planificación}
-El desarrollo del sistema de pruebas tuvo como guía la planificación realizada en el marco de la materia gestión de proyectos. Si bien esta planificación original contemplaba que la presentación del prototipo se realizaría en mayo de 2020, fue necesario posponerla debido a que en el momento de realizar las pruebas de las etapas analógicas del módulo principal, se encontró un error de diseño. No pudiendo corregirse este error, fue imperioso agregar una fase de rediseño de las etapas analógicas y la comunicación con los puertos del módulo principal. Esto se puede ver reflejado en el diagrama de activity on node de la figura \ref{fig:AON} donde se tuvo que incluir una etapa de rediseño del hardware. 
-Finalmente el tiempo invertido en el desarrollo del trabajo suma un total de 658 horas.
+El desarrollo del sistema de pruebas tuvo como guía la planificación realizada en el marco de la materia gestión de proyectos. Si bien esta planificación original contemplaba que la presentación del prototipo se realizaría en mayo de 2020, fue necesario posponerla debido a que en el momento de realizar las pruebas de las etapas analógicas del módulo principal, se encontró un error de diseño. No pudiendo corregirse este error, fue imperioso agregar una fase de rediseño de las etapas analógicas y la comunicación con los puertos del módulo principal. Esto se puede ver reflejado en el diagrama de activity on node de la figura \ref{fig:AON} donde se debió incluir una etapa de rediseño del hardware. 
+Finalmente, el tiempo invertido en el desarrollo del trabajo suma un total de 658 horas.
 
 \begin{figure}[H]
 	\centering
@@ -63,13 +63,13 @@ Finalmente el tiempo invertido en el desarrollo del trabajo suma un total de 658
 	\label{fig:AON}
 \end{figure}
 
-\section{Modulo WIFI ESP-01}
-Uno de los requerimientos establecidos para el trabajo final fue dotar al equipo probador de una conexion WIFI para la implementacion de la interfaz de usuario. Para dicho fin se utilizo un modulo WIFI modelo ESP-01 desarrollado por la empresa AI-Thinker. En la figura \ref{fig:ESP01} se pude ver una fotografia del mismo.
+\section{Módulo WIFI ESP-01}
+Uno de los requerimientos establecidos para el trabajo final fue dotar al equipo probador de una conexión WIFI para la implementación de la interfaz de usuario. Para dicho fin se utilizó un módulo WIFI modelo ESP-01 desarrollado por la empresa AI-Thinker. En la figura \ref{fig:ESP01} se puede ver una fotografía del mismo.
 
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=0.4\textwidth]{./ESP-01.jpg}
-	\caption{Modulo WIFI ESP-01 de AI Thinker}
+	\caption{Módulo WIFI ESP-01 de AI Thinker}
 	\label{fig:ESP01}
 \end{figure}
 
@@ -86,36 +86,36 @@ cuyas principales características son:
 
 \end{itemize}
 
-Si bien el modulo ESP-01 resuelve una parte de la comunicación estableciendo las conexiones y enviando y recibiendo paquetes de datos, es necesario montar un servidor que sea capaz de resolver las distintas peticiones de datos o recursos que lleguen a través del módulo. Para esto se utiliza el protocolo HTTP que se verá a continuación. 
+Si bien el módulo ESP-01 resuelve una parte de la comunicación estableciendo las conexiones y enviando y recibiendo paquetes de datos, es necesario montar un servidor que sea capaz de resolver las distintas peticiones de datos o recursos que lleguen a través del módulo. Para esto se utiliza el protocolo HTTP que se verá a continuación. 
 
 \section{Protocolo HTTP}
 
-El protocolo de transferencia de hipertexto conocido como HTTP es un protocolo de comunicación que permite el intercambio o acceso a datos y recursos entre dispositivos servidores y clientes. Este protocolo es la base del intercambio de datos en la web.(1)
+El protocolo de transferencia de hipertexto conocido como HTTP es un protocolo de comunicación que permite el intercambio o acceso a datos y recursos entre dispositivos servidores y clientes. Este protocolo es la base del intercambio de datos en la web.
  
 Un uso muy habitual del protocolo HTTP es la carga de una página Web, donde el navegador Web actúa de cliente iniciando la comunicación y solicita a un servidor un recurso, por ejemplo una página Web. Esta solicitud se realiza mediante una petición HTTP con una estructura básica, como se ve en la figura \ref{fig:HTTP_Req}, que incluye:
 \begin{itemize}
-	\item Un método que indica al servidor que es lo que se pretende hacer con la petición HTTP. Los métodos más usados son GET, para obtener un recurso del servidor, y POST para enviar información desde el cliente al servidor.
+	\item Un método que indica al servidor qué es lo que se pretende hacer con la petición HTTP. Los métodos más usados son GET, para obtener un recurso del servidor, y POST para enviar información desde el cliente al servidor.
 	\item La URL del recurso, que indica la ubicación del recurso al que se quiere acceder en el servidor.
 	\item La versión del protocolo HTTP que se está utilizando.
-	\item Una cabecera que opcionalmente se puede incluir con distintos parámetros como ser lenguaje aceptado, tipo de contenido, fecha y hora, datos del navegador, etc. (3)
+	\item Una cabecera que opcionalmente se puede incluir con distintos parámetros, por ejemplo lenguaje aceptado, tipo de contenido, fecha y hora, datos del navegador, etc. 
 	\item El cuerpo del mensaje, normalmente utilizado en métodos POST para enviar información al servidor.
 \end{itemize}
 
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=1\textwidth]{./HTTP_Request.png}
-	\caption{Estructura de una peticion HTTP.}
+	\caption{Estructura de una petición HTTP.}
 	\label{fig:HTTP_Req}
 \end{figure}
 
-Luego el servidor puede responder con los datos pedidos por el cliente, que cuando se trata de la carga de una página Web, común que esta se realice por partes, transfiriendo documentos HTML, scripts, hojas de estilo y datos.
+Luego, el servidor puede responder con los datos pedidos por el cliente, que al tratarse de la carga de una página Web, es común que ésta se realice por partes, transfiriendo documentos HTML, scripts, hojas de estilo y datos.
 Al igual que las peticiones HTTP, las respuestas HTTP también tienen una estructura, como se ve en la figura \ref{fig:HTTP_Resp}, compuesta por:
 
 \begin{itemize}
-	\item La versión del protocolo
-	\item El código del estado, es decir un código que indica si se pudo ejecutar la solicitud y en caso contrario porque no se pudo.
+	\item La versión del protocolo.
+	\item El código del estado, es decir un código que indica si se pudo ejecutar la solicitud y en caso contrario porqué no se pudo.
 	\item Mensaje de estado.
-	\item Una cabecer con parámetros al igual que en la petición
+	\item Una cabecera con parámetros al igual que en la petición.
 	\item El cuerpo con el recurso pedido.
 \end{itemize}
 
@@ -126,5 +126,5 @@ Al igual que las peticiones HTTP, las respuestas HTTP también tienen una estruc
 	\label{fig:HTTP_Resp}
 \end{figure}
 
-Finalmente el cliente, que en este caso es un navegador Web, compone la página web y ejecuta los scripts.
+Finalmente, el cliente, que en este caso es un navegador Web, compone la página web y ejecuta los scripts.
 
