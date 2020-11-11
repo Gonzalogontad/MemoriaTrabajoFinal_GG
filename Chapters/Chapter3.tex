@@ -2,91 +2,164 @@
 
 \label{Chapter3} % Change X to a consecutive number; for referencing this chapter elsewhere, use \ref{ChapterX}
 
-\definecolor{mygreen}{rgb}{0,0.6,0}
-\definecolor{mygray}{rgb}{0.5,0.5,0.5}
-\definecolor{mymauve}{rgb}{0.58,0,0.82}
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% parámetros para configurar el formato del código en los entornos lstlisting
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\lstset{ %
-  backgroundcolor=\color{white},   % choose the background color; you must add \usepackage{color} or \usepackage{xcolor}
-  basicstyle=\footnotesize,        % the size of the fonts that are used for the code
-  breakatwhitespace=false,         % sets if automatic breaks should only happen at whitespace
-  breaklines=true,                 % sets automatic line breaking
-  captionpos=b,                    % sets the caption-position to bottom
-  commentstyle=\color{mygreen},    % comment style
-  deletekeywords={...},            % if you want to delete keywords from the given language
-  %escapeinside={\%*}{*)},          % if you want to add LaTeX within your code
-  %extendedchars=true,              % lets you use non-ASCII characters; for 8-bits encodings only, does not work with UTF-8
-  %frame=single,	                % adds a frame around the code
-  keepspaces=true,                 % keeps spaces in text, useful for keeping indentation of code (possibly needs columns=flexible)
-  keywordstyle=\color{blue},       % keyword style
-  language=[ANSI]C,                % the language of the code
-  %otherkeywords={*,...},           % if you want to add more keywords to the set
-  numbers=left,                    % where to put the line-numbers; possible values are (none, left, right)
-  numbersep=5pt,                   % how far the line-numbers are from the code
-  numberstyle=\tiny\color{mygray}, % the style that is used for the line-numbers
-  rulecolor=\color{black},         % if not set, the frame-color may be changed on line-breaks within not-black text (e.g. comments (green here))
-  showspaces=false,                % show spaces everywhere adding particular underscores; it overrides 'showstringspaces'
-  showstringspaces=false,          % underline spaces within strings only
-  showtabs=false,                  % show tabs within strings adding particular underscores
-  stepnumber=1,                    % the step between two line-numbers. If it's 1, each line will be numbered
-  stringstyle=\color{mymauve},     % string literal style
-  tabsize=2,	                   % sets default tabsize to 2 spaces
-  title=\lstname,                  % show the filename of files included with \lstinputlisting; also try caption instead of title
-  morecomment=[s]{/*}{*/}
-}
+En este capítulo se explican con detalle todo los elementos que componen al sistema y los criterios utilizados para su desarrollo. Se parte de una breve descripción de la estructura del sistema, pasando por el desarrollo de los módulos de hardware y se concluye con la implementación del software.
 
 
-%----------------------------------------------------------------------------------------
-%	SECTION 1
-%----------------------------------------------------------------------------------------
-\section{Análisis del software}
- 
-La idea de esta sección es resaltar los problemas encontrados, los criterios utilizados y la justificación de las decisiones que se hayan tomado.
+\section{Estructura general del sistema}
+Con el objetivo de lograr un sistema adaptable y escalable se optó por realizar un diseño modular. Este diseño consiste en tres tipos de módulos o etapas: el módulo principal, los módulos adicionales y la interfaz de usuario. La figura \ref{fig:BloquesGral} indica en forma general la estructura del sistema y el modo en que los módulos están conectados entre sí.
 
-Se puede agregar código o pseudocódigo dentro de un entorno lstlisting con el siguiente código:
 
-\begin{verbatim}
-\begin{lstlisting}[caption= "un epígrafe descriptivo"]
-	las líneas de código irían aquí...
-\end{lstlisting}
-\end{verbatim}
+\begin{figure}[ht]
+	\centering
+	\includegraphics[scale=0.5]{./Figures/BloquesGral.pdf}
+	\caption{Diagrama en bloques del sistema.}
+	\label{fig:BloquesGral}
+\end{figure}
 
-A modo de ejemplo:
+\subsection{Módulo principal}
+El módulo principal es la base del sistema, allí se encuentra el núcleo de procesamiento, la etapa de comunicación con la interfaz de usuario, el servidor web de la misma y los puertos de conexión con los módulos adicionales. Estos puertos de conexión son los encargados de capturar las señales provenientes de los módulos adicionales, tanto en forma analógica como digital. Además, son capaces de generar señales analógicas y digitales y proveer de alimentación a los módulos adicionales.
+Una característica importante de estos puertos de conexión es que se encuentran aislados eléctricamente uno del otro para poder trabajar con equipos no aislados y únicamente se  comunican con el núcleo de procesamiento mediante una interfaz optoaislada.
 
-\begin{lstlisting}[label=cod:vControl,caption=Pseudocódigo del lazo principal de control.]  % Start your code-block
+\subsection{Módulos adicionales}
+Los módulos adicionales cumplen las funciones de conectar y adaptar las señales entre los puertos del módulo principal y el equipo bajo prueba. Estos módulos se diseñan específicamente para cada tipo o familia de productos. Gracias a esta estructura modular se puede adaptar el sistema para realizar distintas pruebas con pocos cambios de hardware.
+Al momento se desarrollaron dos módulos adicionales, uno para prueba de temporizadores y otro para la prueba de salida de drivers.
 
-#define MAX_SENSOR_NUMBER 3
-#define MAX_ALARM_NUMBER  6
-#define MAX_ACTUATOR_NUMBER 6
+\subsection{Interfaz de Usuario}
+La interfaz de usuario es el medio por el cual se controla al sistema. Se desarrolló de forma que pueda ejecutarse en cualquier plataforma que tenga un navegador web y esté conectada a la misma red que el módulo principal. Por ejemplo, se puede ejecutar desde una tablet, notebook o celular y con solo ingresar el IP del sistema de pruebas se tiene acceso al panel de control donde se puede seleccionar la prueba a realizar, configurar los parámetros, ejecutar las pruebas y visualizar los resultados.
 
-uint32_t sensorValue[MAX_SENSOR_NUMBER];		
-FunctionalState alarmControl[MAX_ALARM_NUMBER];	//ENABLE or DISABLE
-state_t alarmState[MAX_ALARM_NUMBER];						//ON or OFF
-state_t actuatorState[MAX_ACTUATOR_NUMBER];			//ON or OFF
+\section{Desarrollo de hardware del módulo principal}
 
-void vControl() {
+El módulo principal, como se mencionó anteriormente, posee el núcleo de procesamiento implementado con una placa de desarrollo EDU-CIAA, un módulo de comunicación WIFI ESP-01 para la interfaz de usuario y los puertos de conexión con los módulos adicionales. En la figura \ref{fig:BloquesPrincipal} se presenta un diagrama en bloques del módulo principal cuyos elementos serán detallados a continuación.
 
-	initGlobalVariables();
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=1\textwidth]{./Figures/bloquesPrincipal.pdf}
+	\caption{Diagrama en bloques del módulo principal.}
+	\label{fig:BloquesPrincipal}
+\end{figure}
+
+
+
+\subsection{Placa de desarrollo EDU-CIAA}
+
+El uso de la placa de desarrollo EDU-CIAA como núcleo de procesamiento fue uno de los requerimientos establecidos al inicio del proyecto. Esta decisión se basó principalmente en que la EDU-CAA es la plataforma sobre la que más se trabajó durante la especialización y se dispone de gran variedad de recursos de software y soporte por parte de la comunidad. 
+Respecto al hardware, la placa dispone un procesador LPC4337 con dos núcleos asimétricos, un Cortex M4 y un Cortex M0, trabajando a 208 Mhz y un amplio abanico de interfaces de comunicación como ser bus I2C, SPI, USB, CAN y varias UARTs. 
+
+
+\subsection{Puertos de conexión}
+
+Los puertos de conexión son las piezas de hardware que más trabajo requirieron en su diseño. Fue necesario desarrollar dos esquemas preliminares de hardware a causa de que las primeras pruebas que se realizaron no fueron exitosas. Esto se debió a que el diseño no contemplaba el hecho de que muchos drivers de LEDs no están aislados entre entrada y salida, impidiendo así el uso de una masa común entre los distintos puertos de conexión. Siendo imposible solucionar esto sin alterar la topología del circuito, se optó por un esquema de puertos opto-aislados. La figura \ref{fig:BloquesPuerto} representa en un esquema de bloques el circuito de un puerto de conexión donde se puede apreciar que cada puerto dispone de un microcontrolador de la familia STM32, en particular para el desarrollo se eligió un módulo Bluepill basado en el microcontrolador STM32F108C8T6 con núcleo Cortex M3. Este microcontrolador cumple las siguientes funciones:
+
+\begin{itemize}
+	\item Comunicación mediante UART opto-aislada con la EDU-CIAA.
+	\item Capturar el estado de las 3 entradas digitales del puerto.
+	\item Muestreo de las 2 entradas analógicas del puerto.
+	\item Comunicación con el conversor digital-analógico de la salida analógica 0-10v.
+	\item Generar las señales de las 3 salidas digitales del puerto y activar el relay de alimentación de 220VAC.
+\end{itemize}
+
+\begin{figure}[ht]
+	\centering
+	\includegraphics[width=1\textwidth]{./Figures/BloquesPuerto.pdf}
+	\caption{Diagrama en bloques de un puerto de conexión.}
+	\label{fig:BloquesPuerto}
+\end{figure}
+
+
+\subsection{Interfaz UART opto-aislada}
 	
-	period = 500 ms;
-		
-	while(1) {
+Para el diseño de la interfaz UART opto-aislada se tuvieron en cuenta los requerimientos de cantidad de canales analógico a digital y digital a analógico, la velocidad de muestreo y el número de entradas y salidas digitales, que en forma indirecta establecen la velocidad de comunicación mínima que debe poseer la interfaz UART opto-aislada entre los puertos y la EDU-CIAA.
+También fue necesario establecer un protocolo para empaquetar los datos e identificar a qué puerto corresponde cada paquete de datos.
+El protocolo diseñado consiste en un protocolo maestro-esclavos donde un maestro, en este caso la EDU-CIAA, inicia la comunicación con un esclavo enviando una trama de 5 bytes, como lo indica la figura \ref{fig:TramaMS}, que a través de la UART opto-aislada llega a todos los puertos.
 
-		ticks = xTaskGetTickCount();
-		
-		updateSensors();
-		
-		updateAlarms();
-		
-		controlActuators();
-		
-		vTaskDelayUntil(&ticks, period);
-	}
-}
-\end{lstlisting}
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=1\textwidth]{./Figures/TramaMS.pdf}
+	\caption{Estructura de una trama de datos de maestro a esclavo.}
+	\label{fig:TramaMS}
+\end{figure}
 
+A continuación cada esclavo, es decir cada uno de los puertos, captura la trama y obtiene la dirección correspondiente a la trama recibida y la compara con la propia. Solo el esclavo con la misma dirección debe responder al maestro mediante una trama de 4 bytes con la estructura que se indica en la figura \ref{fig:TramaSM}.
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=1\textwidth]{./Figures/TramaSM.pdf}
+	\caption{Estructura de una trama de datos de esclavo a maestro.}
+	\label{fig:TramaSM}
+\end{figure}
+
+Una vez establecido el protocolo donde se deben transmitir 5 bytes de maestro a esclavo y 4 bytes de esclavo a maestro en configuración full-duplex, y teniendo en cuenta que en el listado de requerimientos se establecio una taza de refresco de mil veces por segundo por cada uno de los seis puertos, se calculó una velocidad de comunicación mínima requerida de 30 KB/s. Luego se escogió la velocidad estándar más cercana para un puerto UART, siendo ésta 460800 Kb/s excede ampliamente lo minimo requerido y deja espacio para futuras expansiones.
+
+Para la selección de los opto acopladores, se evaluaron algunas alternativas disponibles en el mercado local. La tabla \ref{tab:Optos} resume las características principales de los mismos donde se puede destacar al tiempo de respuesta como el factor limitante. 
+Utilizando como criterio de diseño que el tiempo de respuesta del optoacoplador debe ser 10 veces menor que el tiempo de un bit para lograr una salida aceptable, significa que para lograr una velocidad de 460800 Kb/s se requiere un tiempo de respuesta menor a 217 ns. Por lo tanto en la tabla \ref{tab:Optos} se puede observar que la mejor opción para la aplicación es el optoacoplador 6N137 debido a que es el único capaz de trabajar a la velocidad de 460800 Kb/s requerida.
+
+	\begin{table}[h]
+	\centering
+	\caption[Tabla de comparación de optoacopladores para la interfaz UART optoaislada]{Comparación de optoacopladores}
+	\begin{tabular}{l c c c c}    
+		\toprule
+		\textbf{Modelo} 	 & \textbf{PC817(1)} & \textbf{4N35(2)}& \textbf{6N137(3)}	\\
+		\midrule
+Tensión de alimentación             & \textless{}80 V & \textless{}70 V & 5 V           &  \\
+Tipo de salida                      & Transistor      & Transistor      & \emph{Open drain}    &  \\
+Tiempo de respuesta subida / bajada & 18 us / 18 us   & 10 us / 10 us   & 75 ns / 75 ns &  \\
+Tensión de aislación                & 5 KV            & 5 KV            & 5.3 KV        &  \\
+Cantidad de pines                   & 4               & 6               & 8             & \\
+		\bottomrule
+		\hline
+	\end{tabular}
+	\label{tab:Optos}
+\end{table}
+
+Una vez seleccionado el optoacoplador se realizó el diagrama esquemático de la interfaz opto-aislada de la figura \ref{fig:InterfazOpto}. El diseño contempla que la salida, es decir la línea de datos del puerto hacia la EDU-CIAA, sea por colector y resistencia pull-up para que se puedan conectar todos los puertos en paralelo. A su vez se tuvo en cuenta que la entrada de todos los puertos están conectadas a la misma salida de la EDU-CIAA y ésta no debe ser sobrecargada, por lo que se utilizó un transistor a la entrada que actúe de buffer.
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=1\textwidth]{./Figures/InterfazOpto.pdf}
+	\caption{Diagrama esquematico de la interfaz UART optoaislada.}
+	\label{fig:InterfazOpto}
+\end{figure}
+
+
+\subsection{Entradas y salidas digitales}
+
+Del listado de requerimientos surge la necesidad de implementar tres entradas digitales, tres salidas digitales y una salida de alimentación para los módulos adicionales. La figura \ref{fig:EntradaDigital} muestra el diagrama esquemático del circuito adaptador de nivel de una de las entradas digitales la cual fue diseñada para tolerar niveles de tensión de hasta 30 V y proteger al microcontrolador STM32F108C8T6.
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.8\textwidth]{./Figures/EntradaDigital.pdf}
+	\caption{Diagrama esquematico de una entrada digital.}
+	\label{fig:EntradaDigital}
+\end{figure}
+
+Para las salidas digitales se escogió una configuración de salida optoacoplada de colector abierto como se ve en la figura \ref{fig:SalidaDigital}. En esta misma figura, además, se puede ver la salida de alimentación de 220 VAC de los módulos adicionales, esta se implementó con una salida a relé de dos contactos que permite la conexión y desconexión de fase y neutro al mismo tiempo.
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.8\textwidth]{./Figures/SalidaDigital.pdf}
+	\caption{Diagrama esquemático de una salida digital y la salida de alimentacion de 220 VAC.}
+	\label{fig:SalidaDigital}
+\end{figure}
+
+\subsection{Salida y entradas analogicas}
+
+Cada puerto del módulo principal dispone de una salida analógica con capacidad de generar señales entre 0-10 V. Como el microcontrolador STM32F108C8T6 no posee un conversor digital analógico fue necesario utilizar un conversor externo, el conversor elegido para el diseño fue el MCP4725 de microchip. Este conversor de 12 bits y un canal se comunica con el microcontrolador mediante un bus I2C. 
+Como se puede ver en el diagrama esquemático de la figura \ref{fig:SalidaAnalogica} se tuvo que diseñar una etapa de amplificación que lleve el nivel de tensión del rango 0 - 3.3 V que puede entregar el MCP4725 hasta el rango de 0 - 10 V que fue especificado en los requerimientos para la salida analógica..
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=1\textwidth]{./Figures/SalidaAnalogica.pdf}
+	\caption{Diagrama esquemático de la salida analógica de un puerto.}
+	\label{fig:SalidaAnalogica}
+\end{figure}
+
+Para las entradas analógicas se dio uso a los dos conversores analógico-digital incluidos en el microcontrolador STM32F103C8T6, que muestrean ambas entradas en forma simultanea. Al igual que la salida analogica, fue necesario hacer una adaptación del nivel de tensión de entrada de 0 -10 V al rango 0 - 3.3 V con un circuito atenuador y un buffer. En la figura \ref{fig:EntradaAnalogica} se puede ver el circuito atenuador implementado que además, para proteger al puerto, se diseño una protección por sobre tensión en la entrada analogica que limita la tensión a un máximo de 12 V.
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=1\textwidth]{./Figures/EntradaAnalogica.pdf}
+	\caption{Diagrama esquemático de una entrada analógica.}
+	\label{fig:EntradaAnalogica}
+\end{figure}
 
 

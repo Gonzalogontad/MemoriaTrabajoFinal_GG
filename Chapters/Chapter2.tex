@@ -5,29 +5,8 @@
 %----------------------------------------------------------------------------------------
 %	SECTION 1
 %----------------------------------------------------------------------------------------
-En este capítulo se describe en forma global la estructura del sistema y sus funciones. También se establecen los requerimientos y la planificación del proyecto llevado a cabo.
+En este capítulo introduce al lector a las tecnologias que fueron utilizadas y también se establecen los requerimientos y la planificación del proyecto llevado a cabo.
 
-\section{Estructura general del sistema}
-Con el objetivo de lograr un sistema adaptable y escalable se optó por realizar un diseño modular. Este diseño consiste en tres tipos módulos o etapas: el módulo principal, los módulos adicionales y la interfaz de usuario. La figura \ref{fig:BloquesGral} indica en forma general la estructura del sistema y el modo en que los módulos están conectados entre sí.
-
-
-\begin{figure}[ht]
-	\centering
-	\includegraphics[scale=0.5]{./Figures/BloquesGral.pdf}
-	\caption{Diagrama en bloques del sistema.}
-	\label{fig:BloquesGral}
-\end{figure}
-
-\subsection{Módulo principal}
-El módulo principal es la base del sistema, allí se encuentra el núcleo de procesamiento, la etapa de comunicación con la interfaz de usuario, el servidor web de la misma y los puertos de conexión con los módulos adicionales. Estos puertos de conexión son los encargados de capturar las señales provenientes de los módulos adicionales, tanto en forma analógica como digital. Además, son capaces de generar señales analógicas y digitales y proveer de alimentación a los módulos adicionales.
-Una característica importante de estos puertos de conexión es que se encuentran aislados eléctricamente uno del otro para poder trabajar con equipos no aislados y únicamente se  comunican con el núcleo de procesamiento mediante una interfaz optoaislada.
-
-\subsection{Módulos adicionales}
-Los módulos adicionales cumplen las funciones de conectar y adaptar las señales entre los puertos del módulo principal y el equipo bajo prueba. Estos módulos se diseñan específicamente para cada tipo o familia de productos. Gracias a esta estructura modular se puede adaptar el sistema para realizar distintas pruebas con pocos cambios de hardware.
-Al momento se desarrollaron dos módulos adicionales, uno para prueba de temporizadores y otro para la prueba de salida de drivers.
-
-\subsection{Interfaz de Usuario}
-La interfaz de usuario es el medio por el cual se controla al sistema. Se desarrolló de forma que pueda ejecutarse en cualquier plataforma que tenga un navegador web y esté conectada a la misma red que el módulo principal. Por ejemplo, se puede ejecutar desde una tablet, notebook o celular y con solo ingresar el IP del sistema de pruebas se tiene acceso al panel de control donde se puede seleccionar la prueba a realizar, configurar los parámetros, ejecutar las pruebas y visualizar los resultados.
 
 \section{Requerimientos}
 El diseño del sistema de pruebas se realizó siguiendo una serie de requerimientos que fueron establecidos al comienzo del proyecto. A continuación se detallan cada uno de ellos según la etapa del sistema a la que hacen referencia.
@@ -74,5 +53,78 @@ Control de versiones:
 \end{itemize}
 
 \section{Planificación}
-El desarrollo del sistema de pruebas tuvo como guía la planificación realizada en el marco de la materia gestión de proyectos. Si bien esta planificación original contemplaba que la presentación del prototipo se realizaría en mayo de 2020, fue necesario posponerla debido a que en el momento de realizar las pruebas de las etapas analógicas del módulo principal, se encontró un error de diseño. No pudiendo corregirse este error, fue imperioso agregar una fase de rediseño de las etapas analógicas y la comunicación con los puertos del módulo principal.
+El desarrollo del sistema de pruebas tuvo como guía la planificación realizada en el marco de la materia gestión de proyectos. Si bien esta planificación original contemplaba que la presentación del prototipo se realizaría en mayo de 2020, fue necesario posponerla debido a que en el momento de realizar las pruebas de las etapas analógicas del módulo principal, se encontró un error de diseño. No pudiendo corregirse este error, fue imperioso agregar una fase de rediseño de las etapas analógicas y la comunicación con los puertos del módulo principal. Esto se puede ver reflejado en el diagrama de activity on node de la figura \ref{fig:AON} donde se tuvo que incluir una etapa de rediseño del hardware. 
+Finalmente el tiempo invertido en el desarrollo del trabajo suma un total de 658 horas.
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=1\textwidth]{./DiagramaAON.pdf}
+	\caption{Diagrama activity on node del trabajo.}
+	\label{fig:AON}
+\end{figure}
+
+\section{Modulo WIFI ESP-01}
+Uno de los requerimientos establecidos para el trabajo final fue dotar al equipo probador de una conexion WIFI para la implementacion de la interfaz de usuario. Para dicho fin se utilizo un modulo WIFI modelo ESP-01 desarrollado por la empresa AI-Thinker. En la figura \ref{fig:ESP01} se pude ver una fotografia del mismo.
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.4\textwidth]{./ESP-01.jpg}
+	\caption{Modulo WIFI ESP-01 de AI Thinker}
+	\label{fig:ESP01}
+\end{figure}
+
+El módulo ESP-01 es un dispositivo basado en el SoC (\emph{System on Chip}, sitema en chip) ESP8266EX fabricado por Espressif,
+cuyas principales características son:
+\begin{itemize}
+	\item Núcleo Tensilica L106 de 32 bit funcionando a 80Mhz.
+	\item Stack TCP/IP y WIFI integrado.
+	\item Compatible con estándar IEEE 802.11b/g/n .
+	\item Seguridad WEP/WPA-PSK/WPA2-PSK.
+	\item Posibilidad de funcionamiento en modo \emph{station}, \emph{access point} y \emph{station+access point}.
+	\item Configuración y comunicación mediante comandos AT por interfaz UART.
+	\item Cuatro GPIOs disponibles, de los cuales dos son para la interfaz UART.
+
+\end{itemize}
+
+Si bien el modulo ESP-01 resuelve una parte de la comunicación estableciendo las conexiones y enviando y recibiendo paquetes de datos, es necesario montar un servidor que sea capaz de resolver las distintas peticiones de datos o recursos que lleguen a través del módulo. Para esto se utiliza el protocolo HTTP que se verá a continuación. 
+
+\section{Protocolo HTTP}
+
+El protocolo de transferencia de hipertexto conocido como HTTP es un protocolo de comunicación que permite el intercambio o acceso a datos y recursos entre dispositivos servidores y clientes. Este protocolo es la base del intercambio de datos en la web.(1)
+ 
+Un uso muy habitual del protocolo HTTP es la carga de una página Web, donde el navegador Web actúa de cliente iniciando la comunicación y solicita a un servidor un recurso, por ejemplo una página Web. Esta solicitud se realiza mediante una petición HTTP con una estructura básica, como se ve en la figura \ref{fig:HTTP_Req}, que incluye:
+\begin{itemize}
+	\item Un método que indica al servidor que es lo que se pretende hacer con la petición HTTP. Los métodos más usados son GET, para obtener un recurso del servidor, y POST para enviar información desde el cliente al servidor.
+	\item La URL del recurso, que indica la ubicación del recurso al que se quiere acceder en el servidor.
+	\item La versión del protocolo HTTP que se está utilizando.
+	\item Una cabecera que opcionalmente se puede incluir con distintos parámetros como ser lenguaje aceptado, tipo de contenido, fecha y hora, datos del navegador, etc. (3)
+	\item El cuerpo del mensaje, normalmente utilizado en métodos POST para enviar información al servidor.
+\end{itemize}
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=1\textwidth]{./HTTP_Request.png}
+	\caption{Estructura de una peticion HTTP.}
+	\label{fig:HTTP_Req}
+\end{figure}
+
+Luego el servidor puede responder con los datos pedidos por el cliente, que cuando se trata de la carga de una página Web, común que esta se realice por partes, transfiriendo documentos HTML, scripts, hojas de estilo y datos.
+Al igual que las peticiones HTTP, las respuestas HTTP también tienen una estructura, como se ve en la figura \ref{fig:HTTP_Resp}, compuesta por:
+
+\begin{itemize}
+	\item La versión del protocolo
+	\item El código del estado, es decir un código que indica si se pudo ejecutar la solicitud y en caso contrario porque no se pudo.
+	\item Mensaje de estado.
+	\item Una cabecer con parámetros al igual que en la petición
+	\item El cuerpo con el recurso pedido.
+\end{itemize}
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=1\textwidth]{./HTTP_Response.png}
+	\caption{Estructura de una respuesta HTTP.}
+	\label{fig:HTTP_Resp}
+\end{figure}
+
+Finalmente el cliente, que en este caso es un navegador Web, compone la página web y ejecuta los scripts.
 
