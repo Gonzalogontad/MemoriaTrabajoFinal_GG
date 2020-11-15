@@ -1,0 +1,41 @@
+void HAL_UART_RxCpltCallback(UART_HandleTypeDef *UartHandle)
+{
+	uint8_t auxByte;
+	//Si el primer bit es 1 significa que llegó el primer byte de una trama
+	if (bufferUARTin[receiveIndex]& 0x80){
+		//Chequeo address del dato, si es el propio envio los datos de ADCs y entradas
+		if (((auxByte=bufferUARTin[receiveIndex]>>4)&0x07)==moduleAddr){
+			receiveIndex = 1;//Primer byte de la trama recibido
+			for (auxByte=0; auxByte < OUTPUT_BUFFER_SIZE; auxByte++){
+				bufferUARTout[auxByte] = packedDataOut [packedDataIndex][auxByte];
+				}
+			//Transmito la información por la UART
+			if(HAL_UART_Transmit_IT(&huart1, bufferUARTout, OUTPUT_BUFFER_SIZE)!= HAL_OK){
+				 Error_Handler();
+			  }
+		}
+		else receiveIndex = 0; //Si el dato no corresponde a este address reinicio el Índice
+	}
+	//Si el primer bit es 0 significa que llegó el 2 o 3 byte puede o no ser para el address actual
+	else{
+		if (receiveIndex == 1){
+			//Ordeno los datos para el DAC
+			DACData[1] = bufferUARTin[1]<<2; 
+			DACData[0] = ((bufferUARTin[0]&0x07)<<1)|(bufferUARTin[1]>>6); 
+			receiveIndex = 2; //Segundo byte recibido
+		}
+		else
+			if (receiveIndex == 2)			{
+				//Ordeno los datos de las salidas digitales
+				outData=bufferUARTin[2]|((bufferUARTin[0] & 0x08)<<4);
+				dataFlag = 1; //Indico que hay datos para enviar al DAC y a las salidas digitales
+				receiveIndex = 0; //Tercer byte recibido
+			}
+	}
+
+	//Reinicio la recepción de otro dato por UART y lo guardo en el buffer
+	if(HAL_UART_Receive_IT(&huart1, (uint8_t*) &bufferUARTin[receiveIndex], 1) != HAL_OK){
+	    Error_Handler();
+	  }
+}
+
