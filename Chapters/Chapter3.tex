@@ -163,3 +163,98 @@ Para las entradas analógicas se dio uso a los dos conversores analógico-digita
 \end{figure}
 
 
+
+
+\section{Desarrollo de hardware del módulo prueba de drivers}
+
+El módulo test de drivers es un circuito diseñado para realizar la medición de los valores de tensión y corriente en la salida de un driver para iluminación LED. En el diagrama en bloques de la figura \ref{fig:BloquesTestDriver} se puede ver que el módulo está compuesto por cinco etapas que adaptan las señales a los niveles de tensión soportados por los puertos del módulo principal y la forma en que se conecta con el modulo principal y la carga.
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=1\textwidth]{./Figures/BloquesTestDriver.pdf}
+	\caption{Diagrama en bloques del modulo prueba de drivers.}
+	\label{fig:BloquesTestDriver}
+\end{figure}
+
+
+De las cinco etapas de este módulo, dos sirven para mediciones analogicas. La primera etapa, cuyo esquemático se puede ver en la figura \ref{fig:MedicionCorriente}, es para la medición de corriente de salida de drivers de LEDs. Esta se diseñó para hacer mediciones entre 0 y 2,5 A de corriente continua entregando a la salida un nivel de tensión proporcional en el rango 0 - 10 V.
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=1\textwidth]{./Figures/MedicionCorriente.pdf}
+	\caption{Esquematico del circuito de medición de corriente de drivers.}
+	\label{fig:MedicionCorriente}
+\end{figure}
+
+La segunda etapa de medicion analogica es una etapa de medicion de tension continua de la salida del driver de LEDs. En el esquemático de la figura \ref{fig:MedicionTension} se puede ver el circuito atenuador y separador diseñado para llevar el nivel de tensión del rango 0 - 500 VDC a 0 - 10 V compatible con los puertos del módulo principal.
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.7\textwidth]{./Figures/MedicionTension.pdf}
+	\caption{Esquematico del circuito de medición de tensión de drivers.}
+	\label{fig:MedicionTension}
+\end{figure}
+
+Este módulo además posee dos salidas para dimerizar drivers, una de ellas de dimerizado analogico, para la cual se construyo una etapa buffer de ganancia unitaria que separe al modulo principal del driver. La otra salida de dimerizado es una salida discreta que mediante la combinación de dos relés conmuta resistencias con las que se puede configurar el dimerizado en algunos modelos de drivers.
+La última etapa de este módulo es una salida tipo on/off a relé para hacer la conexión y desconexión de la carga de los drivers de LEDs.
+
+
+\section{Desarrollo de hardware del módulo prueba de temporizadores}
+
+El moulo de prueba de temporizadores esta formado por dos etapas, la etapa de disparo y la etapa de captura de salida. En la figura \ref{fig:BloquesTestTemp} se puede ver el diagrama en bloques, la conexión con el modulo principal y con los dos tipos de temporizadores que soporta.
+
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.9\textwidth]{./Figures/BloquesTestTemp.pdf}
+	\caption{Diagrama en bloques del módulo prueba de temporizadores.}
+	\label{fig:BloquesTestTemp}
+\end{figure}
+
+
+\section{Desarrollo de circuitos impresos}
+
+El diseño de los circuitos impresos y los diagramas esquemáticos se realizaron con el software libre KICAD. En total se diseñaron tres modelos, el circuito impreso de un puerto del modulo principal, que en la figura \ref{fig:FotoPuerto} se puede ver un renderizado del mismo junto con una foto de la placa real, el del modulo de prueba de drivers y el del modulo de prueba de temporizadores, que se pueden ver en la figura \ref{fig:ModulosAdic}. De cada uno se fabricaron seis unidades.
+
+
+\begin{figure}[H]
+  \centering
+  \begin{subfigure}[b]{0.45\textwidth}
+    \centering
+     \includegraphics[width=0.9\textwidth]{./RenderPuerto.png}
+     \centering
+	\caption{\protect\raggedright Renderizado en Kicad.}
+	\label{fig:Render}
+  \end{subfigure}
+  \hfill
+  \begin{subfigure}[b]{0.45\textwidth}
+    \centering
+     \includegraphics[width=0.9\textwidth]{./FotoPuerto.jpg}
+     \centering
+	\caption{\protect\raggedright Foto real.}
+	\label{fig:Foto}
+  \end{subfigure}
+	\caption{Renderizado y fotografía de placa de un puerto del módulo principal}
+    \label{fig:FotoPuerto}
+\end{figure}
+
+\begin{figure}[H]
+  \centering
+  \begin{subfigure}[b]{0.45\textwidth}
+    \centering
+     \includegraphics[width=0.9\textwidth]{./FotoTestDriver.jpg}
+     \centering
+	\caption{\protect\raggedright Placa prueba de drivers.}
+	\label{fig:PlacaDrivers}
+  \end{subfigure}
+  \hfill
+  \begin{subfigure}[b]{0.45\textwidth}
+    \centering
+     \includegraphics[width=0.9\textwidth]{./FotoTestTemp.jpg}
+     \centering
+	\caption{\protect\raggedright Placa prueba de temporizadores.}
+	\label{fig:PlacaTemp}
+  \end{subfigure}
+	\caption{Fotografía de la placa del módulo prueba de drivers de LEDs y la placa del módulo prueba de temporizadores de tres y cuatro terminales}
+    \label{fig:ModulosAdic}
+\end{figure}
