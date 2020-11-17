@@ -12,3 +12,73 @@
 \label{sec:pruebasHW}
 
 La idea de esta sección es explicar cómo se hicieron los ensayos, qué resultados se obtuvieron y analizarlos.
+
+% Please add the following required packages to your document preamble:
+% \usepackage{multirow}
+% \usepackage{graphicx}
+\begin{table}[]
+\resizebox{\textwidth}{!}{%
+\begin{tabular}{lllc}
+\hline
+\multicolumn{2}{l}{\textbf{Título}}                     & \textbf{Descripción}                                                                                                                        & \multicolumn{1}{l}{\textbf{Verifica}} \\ \hline
+\multicolumn{2}{l}{Nombre}                              & Prueba de Drivers                                                                                                                           & \multicolumn{1}{l}{}                  \\ \hline
+\multirow{3}{*}{}  & Breve descripción                  & \begin{tabular}[c]{@{}l@{}}Ejecución de la prueba de drivers para \\ luminarias LED\end{tabular}                                            & \multicolumn{1}{l}{}                  \\
+                   & Actor principal                    & Operario                                                                                                                                    & \multicolumn{1}{l}{}                  \\
+                   & Disparadores                       & Presionar en pantalla el botón de Marcha                                                                                                    & \multicolumn{1}{l}{}                  \\ \hline
+\multicolumn{2}{l}{Flujo de eventos}                    &                                                                                                                                             & \multicolumn{1}{l}{}                  \\ \hline
+\multirow{13}{*}{} & \multirow{9}{*}{Flujo Básico}      & 1. Se presiona en pantalla el botón de Marcha.                                                                                              & \multicolumn{1}{l}{}                  \\
+                   &                                    & \begin{tabular}[c]{@{}l@{}}2. El banco de pruebas alimenta el driver y se \\ dimeriza al 10\%\end{tabular}                                  & SI                                    \\
+                   &                                    & \begin{tabular}[c]{@{}l@{}}3. Se miden los valores de tensión y corriente \\ del driver\end{tabular}                                        & SI                                    \\
+                   &                                    & \begin{tabular}[c]{@{}l@{}}4. Si las mediciones están dentro de los valores \\ de aceptación, se dimeriza al 50\%\end{tabular}              & SI                                    \\
+                   &                                    & \begin{tabular}[c]{@{}l@{}}5. Se miden los valores de tensión y corriente \\ del driver\end{tabular}                                        & SI                                    \\
+                   &                                    & \begin{tabular}[c]{@{}l@{}}6. Si las mediciones están dentro de los valores \\ de aceptación, se dimeriza al 100\%\end{tabular}             & SI                                    \\
+                   &                                    & \begin{tabular}[c]{@{}l@{}}7. Se miden los valores de tensión y corriente \\ del driver\end{tabular}                                        & SI                                    \\
+                   &                                    & \begin{tabular}[c]{@{}l@{}}8. Si las mediciones están dentro de los valores de\\ aceptación, se indica en pantalla PASA\end{tabular}        & SI                                    \\
+                   &                                    & 9. Esperar nueva prueba.                                                                                                                    & SI                                    \\ \cline{2-4} 
+                   & \multirow{4}{*}{Flujo Alternativo} & Del punto 3, 5 o 7 del flujo básico                                                                                                         & \multicolumn{1}{l}{}                  \\
+                   &                                    & \begin{tabular}[c]{@{}l@{}}4A. Si las mediciones no están dentro de los valores \\ de aceptación se aborta la prueba.\end{tabular}          & SI                                    \\
+                   &                                    & 5A. Se indica en pantalla NO PASA                                                                                                           & SI                                    \\
+                   &                                    & Se regresa al punto 9 del flujo básico                                                                                                      & SI                                    \\ \hline
+\multicolumn{2}{l}{Requerimientos especiales}           &                                                                                                                                             & \multicolumn{1}{l}{}                  \\ \hline
+\multicolumn{2}{l}{Precondiciones}                      & El driver debe estar conectado al banco de pruebas.                                                                                         & SI                                    \\ \hline
+\multicolumn{2}{l}{Poscondiciones}                      & \begin{tabular}[c]{@{}l@{}}Se debe desconectar la alimentación del driver \\ (por software) para poder operar en forma segura.\end{tabular} & SI                                    \\ \hline
+\end{tabular}%
+}
+\end{table}
+
+
+
+% Please add the following required packages to your document preamble:
+% \usepackage{multirow}
+% \usepackage{graphicx}
+\begin{table}[]
+\resizebox{\textwidth}{!}{%
+\begin{tabular}{lllc}
+\hline
+\multicolumn{2}{l}{\textbf{Título}}                                                               & \textbf{Descripción}                                                                                                                                                                             & \textbf{Verifica}    \\ \hline
+\multicolumn{2}{l}{Nombre}                                                                        & Prueba de Temporizadores                                                                                                                                                                         & \multicolumn{1}{l}{} \\ \hline
+\multirow{3}{*}{}                       & Breve descripción                                       & Ejecución de la prueba de temporizadores                                                                                                                                                         & \multicolumn{1}{l}{} \\
+                                        & Actor principal                                         & Operario                                                                                                                                                                                         & \multicolumn{1}{l}{} \\
+                                        & Disparadores                                            & Presionar en pantalla el botón de Marcha                                                                                                                                                         & \multicolumn{1}{l}{} \\ \hline
+\multicolumn{2}{l}{\textbf{Flujo de eventos}}                                                     &                                                                                                                                                                                                  & \multicolumn{1}{l}{} \\ \hline
+\multirow{15}{*}{}                      & \multirow{11}{*}{Flujo Básico}                          & 1. Se presiona el botón (en pantalla) de Marcha                                                                                                                                                  & \multicolumn{1}{l}{} \\
+                                        &                                                         & \begin{tabular}[c]{@{}l@{}}2. Ajustar el temporizador al tiempo T1 (minimo) \\ cuando se indique en pantalla.\end{tabular}                                                                       & SI                   \\
+                                        &                                                         & \begin{tabular}[c]{@{}l@{}}3. El banco de pruebas activa el temporizador o\\  solicita presionar el pulsador.\end{tabular}                                                                       & SI                   \\
+                                        &                                                         & 4. El temporizador activa su salida.                                                                                                                                                             & SI                   \\
+                                        &                                                         & 5. Inicia la cuenta de tiempo de encendido.                                                                                                                                                      & SI                   \\
+                                        &                                                         & \begin{tabular}[c]{@{}l@{}}6. Cuando finaliza el tiempo del temporizador, \\ si el tiempo esta dentro del rango definido se indica \\ ajustar el temporizador al tiempo T2 (maximo)\end{tabular} & SI                   \\
+                                        &                                                         & \begin{tabular}[c]{@{}l@{}}7. El banco de pruebas activa el temporizador o \\ solicita presionar el pulsador.\end{tabular}                                                                       & SI                   \\
+                                        &                                                         & 8. Inicia la cuenta de tiempo de encendido.                                                                                                                                                      & SI                   \\
+                                        &                                                         & \begin{tabular}[c]{@{}l@{}}9. Cuando finaliza el tiempo del temporizador, si \\ el tiempo esta dentro del rango definido se detiene \\ la prueba.\end{tabular}                                   & SI                   \\
+                                        &                                                         & 10. Se indica en pantalla PASA.                                                                                                                                                                  & SI                   \\
+                                        &                                                         & 11. Esperar nueva prueba.                                                                                                                                                                        & SI                   \\ \cline{2-4} 
+                                        & \multirow{4}{*}{Flujo Alternativo}                      & Del punto 5 o del punto 8 del flujo básico                                                                                                                                                       & \multicolumn{1}{l}{} \\
+                                        &                                                         & \begin{tabular}[c]{@{}l@{}}6A. Cuando finaliza el tiempo del temporizador, \\ si el tiempo encendido no está dentro de los \\ valores aceptables se aborta la prueba.\end{tabular}               & SI                   \\
+                                        &                                                         & 7A. Se indica indica en pantalla NO PASA                                                                                                                                                         & SI                   \\
+                                        &                                                         & Se regresa al punto 11 del flujo básico                                                                                                                                                          & SI                   \\ \hline
+\multicolumn{2}{l}{\textbf{\begin{tabular}[c]{@{}l@{}}Requerimientos \\ especiales\end{tabular}}} & -                                                                                                                                                                                                & \multicolumn{1}{l}{} \\ \hline
+\multicolumn{2}{l}{\textbf{Precondiciones}}                                                       & \begin{tabular}[c]{@{}l@{}}El temporizador debe estar conectado al banco \\ de pruebas.\end{tabular}                                                                                             & SI                   \\ \hline
+\multicolumn{2}{l}{\textbf{Poscondiciones}}                                                       & \begin{tabular}[c]{@{}l@{}}Se debe desconectar la alimentación del \\ temporizador (por software) para poder \\ operar en forma segura.\end{tabular}                                             & SI                   \\ \hline
+\end{tabular}%
+}
+\end{table}
