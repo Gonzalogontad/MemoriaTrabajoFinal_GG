@@ -1,11 +1,11 @@
-\chapter{Introducción Específica} % Main chapter title
+\chapter{Introducción específica} % Main chapter title
 
 \label{Chapter2}
 
 %----------------------------------------------------------------------------------------
 %	SECTION 1
 %----------------------------------------------------------------------------------------
-En este capítulo se presentan al lector las tecnologias que fueron utilizadas y también se establecen los requerimientos y la planificación del trabajo llevado a cabo.
+En este capítulo se presentan al lector las tecnologías que fueron utilizadas y  se establecen los requerimientos y la planificación del trabajo llevado a cabo.
 
 
 \section{Requerimientos}
@@ -17,9 +17,9 @@ Módulo principal:
 	\item Debe poder conectarse a una red WIFI que comparta con la pantalla de usuario.
 	\item Debe ser capaz de transmitir información y representarla mediante una interfaz WEB.
 	\item Debe ser capaz de recibir órdenes mediante interfaz WEB.
-	\item Debe ser posible conectar 6 módulos adicionales del mismo tipo a la vez.
-	\item Debe ser capaz de realizar 2 mediciones analógicas simultáneas con una tasa de 	muestreo de al menos mil muestras por segundo.
-	\item Debe contar con al menos 3 salidas digitales y 3 entradas digitales por cada puerto. 
+	\item Debe ser posible conectar seis módulos adicionales del mismo tipo a la vez.
+	\item Debe ser capaz de realizar dos mediciones analógicas simultáneas con una tasa de 	muestreo de al menos mil muestras por segundo.
+	\item Debe contar con al menos tres salidas digitales y tres entradas digitales por cada puerto. 
 	\item Debe disponer de una salida analógica por cada puerto 0-10v.	
 	\item Debe poder proveer a los módulos adicionales de alimentación en cada puerto.
 	\item Debe poder conectarse con una PC mediante una conexión RS232 a modo de 		puerto de configuración y debugging.
@@ -27,11 +27,11 @@ Módulo principal:
 	
 \end{itemize}
 
-Módulo adicional para ensayo de Temporizadores:
+Módulo adicional para ensayo de temporizadores:
 
 \begin{itemize}
-	\item Debe poder probar temporizadores de 3 y 4 terminales.
-	\item Debe proveer de alimentación (220VAC) al equipo bajo prueba.
+	\item Debe poder probar temporizadores de tres y cuatro terminales.
+	\item Debe proveer de alimentación (220 VAC) al equipo bajo prueba.
 	\item Debe generar señales que indiquen al módulo principal el estado de funcionamiento del equipo bajo prueba. 
 	
 \end{itemize}
@@ -41,7 +41,7 @@ Módulo para ensayo de driver de luminaria LED:
 \begin{itemize}
 	\item Debe poder generar señales que indiquen los valores de tensión y corriente de salida del driver bajo prueba.
 	\item Debe poder conmutar cargas.
-	\item Debe proveer de alimentación (220VAC) al equipo bajo prueba.
+	\item Debe proveer de alimentación (220 VAC) al equipo bajo prueba.
 	\item Debe proveer al equipo bajo prueba de una señal de control para dimerizado.
 \end{itemize}
 
@@ -49,7 +49,7 @@ Control de versiones:
 
 \begin{itemize}
 	\item Se debe montar un repositorio GIT.
-	\item El repositorio deberá ser accesible mediante la plataforma GITHUB para poder trabajar en forma remota.
+	\item El repositorio deberá ser accesible mediante la plataforma github para poder trabajar en forma remota.
 \end{itemize}
 
 \section{Planificación}
@@ -64,7 +64,7 @@ Finalmente, el tiempo invertido en el desarrollo del trabajo suma un total de 65
 \end{figure}
 
 \section{Módulo WIFI ESP-01}
-Uno de los requerimientos establecidos para el trabajo final fue dotar al equipo probador de una conexión WIFI para la implementación de la interfaz de usuario. Para dicho fin se utilizó un módulo WIFI modelo ESP-01 desarrollado por la empresa AI-Thinker. En la figura \ref{fig:ESP01} se puede ver una fotografía del mismo.
+Uno de los requerimientos establecidos para el trabajo final fue dotar al equipo probador de una conexión WIFI para la implementación de la interfaz de usuario. Para dicho fin se utilizó un módulo WIFI modelo ESP-01, desarrollado por la empresa AI-Thinker. En la figura \ref{fig:ESP01} se puede ver una fotografía del módulo.
 
 \begin{figure}[H]
 	\centering
@@ -76,7 +76,7 @@ Uno de los requerimientos establecidos para el trabajo final fue dotar al equipo
 El módulo ESP-01 es un dispositivo basado en el SoC (\emph{System on Chip}, sitema en chip) ESP8266EX fabricado por Espressif,
 cuyas principales características son:
 \begin{itemize}
-	\item Núcleo Tensilica L106 de 32 bit funcionando a 80Mhz.
+	\item Núcleo Tensilica L106 de 32 bit funcionando a 80 Mhz.
 	\item Stack TCP/IP y WIFI integrado.
 	\item Compatible con estándar IEEE 802.11b/g/n .
 	\item Seguridad WEP/WPA-PSK/WPA2-PSK.
@@ -90,7 +90,7 @@ Si bien el módulo ESP-01 resuelve una parte de la comunicación estableciendo l
 
 \section{Protocolo HTTP}
 
-El protocolo de transferencia de hipertexto conocido como HTTP es un protocolo de comunicación que permite el intercambio o acceso a datos y recursos entre dispositivos servidores y clientes. Este protocolo es la base del intercambio de datos en la web.
+El protocolo de transferencia de hipertexto, conocido como HTTP, es un protocolo de comunicación que permite el intercambio o acceso a datos y recursos entre dispositivos servidores y clientes. Este protocolo es la base del intercambio de datos en la web.
  
 Un uso muy habitual del protocolo HTTP es la carga de una página Web, donde el navegador Web actúa de cliente iniciando la comunicación y solicita a un servidor un recurso, por ejemplo una página Web. Esta solicitud se realiza mediante una petición HTTP con una estructura básica, como se ve en la figura \ref{fig:HTTP_Req}, que incluye:
 \begin{itemize}
@@ -108,12 +108,12 @@ Un uso muy habitual del protocolo HTTP es la carga de una página Web, donde el 
 	\label{fig:HTTP_Req}
 \end{figure}
 
-Luego, el servidor puede responder con los datos pedidos por el cliente, que al tratarse de la carga de una página Web, es común que ésta se realice por partes, transfiriendo documentos HTML, scripts, hojas de estilo y datos.
+Luego, el servidor puede responder con los datos pedidos por el cliente, que al tratarse de la carga de una página Web, es habitual que ésta se realice por partes, transfiriendo documentos HTML, scripts, hojas de estilo y datos.
 Al igual que las peticiones HTTP, las respuestas HTTP también tienen una estructura, como se ve en la figura \ref{fig:HTTP_Resp}, compuesta por:
 
 \begin{itemize}
 	\item La versión del protocolo.
-	\item El código del estado, es decir un código que indica si se pudo ejecutar la solicitud y en caso contrario porqué no se pudo.
+	\item El código del estado, es decir un código que indica si se pudo ejecutar la solicitud y en caso contrario por qué no se pudo.
 	\item Mensaje de estado.
 	\item Una cabecera con parámetros al igual que en la petición.
 	\item El cuerpo con el recurso pedido.
