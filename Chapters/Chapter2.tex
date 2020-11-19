@@ -22,7 +22,7 @@ Módulo principal:
 	\item Debe contar con al menos tres salidas digitales y tres entradas digitales por cada puerto. 
 	\item Debe disponer de una salida analógica por cada puerto 0-10v.	
 	\item Debe poder proveer a los módulos adicionales de alimentación en cada puerto.
-	\item Debe poder conectarse con una PC mediante una conexión RS232 a modo de 		puerto de configuración y debugging.
+	\item Debe poder conectarse con una PC mediante una conexión RS232 a modo de puerto de configuración y debugging.
 	\item El centro de procesamiento deberá implementarse con un placa EDU-CIAA.
 	
 \end{itemize}
@@ -40,7 +40,7 @@ Módulo para ensayo de driver de luminaria LED:
 
 \begin{itemize}
 	\item Debe poder generar señales que indiquen los valores de tensión y corriente de salida del driver bajo prueba.
-	\item Debe poder conmutar cargas.
+	\item Debe poder conmutar la carga.
 	\item Debe proveer de alimentación (220 VAC) al equipo bajo prueba.
 	\item Debe proveer al equipo bajo prueba de una señal de control para dimerizado.
 \end{itemize}
@@ -69,12 +69,13 @@ Uno de los requerimientos establecidos para el trabajo final fue dotar al equipo
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=0.4\textwidth]{./ESP-01.jpg}
-	\caption{Módulo WIFI ESP-01 de AI Thinker}
+	\caption{Módulo WIFI ESP-01 de AI Thinker\protect\footnotemark.}
 	\label{fig:ESP01}
 \end{figure}
+\footnotetext{Imagen tomada de \url{https://es.wikipedia.org/wiki/ESP8266}}
 
-El módulo ESP-01 es un dispositivo basado en el SoC (\emph{System on Chip}, sitema en chip) ESP8266EX fabricado por Espressif,
-cuyas principales características son:
+
+El módulo ESP-01 es un dispositivo basado en el SoC (\emph{System on Chip}, sitema en chip) ESP8266EX fabricado por Espressif \citep{ESP01}, cuyas principales características son:
 \begin{itemize}
 	\item Núcleo Tensilica L106 de 32 bit funcionando a 80 Mhz.
 	\item Stack TCP/IP y WIFI integrado.
@@ -90,12 +91,12 @@ Si bien el módulo ESP-01 resuelve una parte de la comunicación estableciendo l
 
 \section{Protocolo HTTP}
 
-El protocolo de transferencia de hipertexto, conocido como HTTP, es un protocolo de comunicación que permite el intercambio o acceso a datos y recursos entre dispositivos servidores y clientes. Este protocolo es la base del intercambio de datos en la web.
+El protocolo de transferencia de hipertexto, conocido como HTTP, es un protocolo de comunicación que permite el intercambio o acceso a datos y recursos entre dispositivos servidores y clientes. Este protocolo es la base del intercambio de datos en la web\citep{HTTPWIKI}.
  
 Un uso muy habitual del protocolo HTTP es la carga de una página Web, donde el navegador Web actúa de cliente iniciando la comunicación y solicita a un servidor un recurso, por ejemplo una página Web. Esta solicitud se realiza mediante una petición HTTP con una estructura básica, como se ve en la figura \ref{fig:HTTP_Req}, que incluye:
 \begin{itemize}
-	\item Un método que indica al servidor qué es lo que se pretende hacer con la petición HTTP. Los métodos más usados son GET, para obtener un recurso del servidor, y POST para enviar información desde el cliente al servidor.
-	\item La URL del recurso, que indica la ubicación del recurso al que se quiere acceder en el servidor.
+	\item Un método que indica al servidor qué es lo que se pretende hacer con la petición HTTP\citep{HTTPMOZI}. Los métodos más usados son GET, para obtener un recurso del servidor, y POST para enviar información desde el cliente al servidor.
+	\item La URL, que indica la ubicación del recurso al que se quiere acceder en el servidor.
 	\item La versión del protocolo HTTP que se está utilizando.
 	\item Una cabecera que opcionalmente se puede incluir con distintos parámetros, por ejemplo lenguaje aceptado, tipo de contenido, fecha y hora, datos del navegador, etc. 
 	\item El cuerpo del mensaje, normalmente utilizado en métodos POST para enviar información al servidor.
@@ -104,11 +105,14 @@ Un uso muy habitual del protocolo HTTP es la carga de una página Web, donde el 
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=1\textwidth]{./HTTP_Request.png}
-	\caption{Estructura de una petición HTTP.}
+	\caption{Estructura de una petición HTTP\protect\footnotemark.}
 	\label{fig:HTTP_Req}
 \end{figure}
+\footnotetext{Imagen tomada de \url{https://developer.mozilla.org/es/docs/Web/HTTP/Overview}}
+
 
 Luego, el servidor puede responder con los datos pedidos por el cliente, que al tratarse de la carga de una página Web, es habitual que ésta se realice por partes, transfiriendo documentos HTML, scripts, hojas de estilo y datos.
+
 Al igual que las peticiones HTTP, las respuestas HTTP también tienen una estructura, como se ve en la figura \ref{fig:HTTP_Resp}, compuesta por:
 
 \begin{itemize}
@@ -122,9 +126,10 @@ Al igual que las peticiones HTTP, las respuestas HTTP también tienen una estruc
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=1\textwidth]{./HTTP_Response.png}
-	\caption{Estructura de una respuesta HTTP.}
+	\caption{Estructura de una respuesta HTTP\protect\footnotemark.}
 	\label{fig:HTTP_Resp}
 \end{figure}
+\footnotetext{Imagen tomada de \url{https://developer.mozilla.org/es/docs/Web/HTTP/Overview}}
 
 Finalmente, el cliente, que en este caso es un navegador Web, compone la página web y ejecuta los scripts.
 
