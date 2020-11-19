@@ -142,7 +142,7 @@ Utilizando como criterio de diseño que el tiempo de respuesta del optoacoplador
 		\midrule
 Tensión de alimentación             & \textless{}80 V & \textless{}70 V & 5 V           &  \\
 Tipo de salida                      & Transistor      & Transistor      & \emph{Open drain}    &  \\
-Tiempo de respuesta subida/bajada & 18 us / 18 us   & 10 us / 10 us   & 75 ns / 75 ns &  \\
+Tiempo de subida/bajada  & 18 us / 18 us   & 10 us / 10 us   & 75 ns / 75 ns &  \\
 Tensión de aislación                & 5 KV            & 5 KV            & 5.3 KV        &  \\
 Cantidad de pines                   & 4               & 6               & 8             & \\
 		\bottomrule
@@ -160,14 +160,14 @@ Una vez seleccionado el optoacoplador se realizó el diagrama esquemático de la
 	\label{fig:InterfazOpto}
 \end{figure}
 
-
+\clearpage
 \subsection{Entradas y salidas digitales}
 
 Del listado de requerimientos surge la necesidad de implementar tres entradas digitales, tres salidas digitales y una salida de alimentación de 220 VAC para los módulos adicionales. La figura \ref{fig:EntradaDigital} muestra el diagrama esquemático del circuito adaptador de nivel de una de las entradas digitales, la cual fue diseñada para tolerar niveles de tensión de hasta 30 V y proteger al microcontrolador STM32F108C8T6.
 
 \begin{figure}[H]
 	\centering
-	\includegraphics[width=0.8\textwidth]{./Figures/EntradaDigital.pdf}
+	\includegraphics[width=0.7\textwidth]{./Figures/EntradaDigital.pdf}
 	\caption{Diagrama esquemático de una entrada digital.}
 	\label{fig:EntradaDigital}
 \end{figure}
@@ -176,7 +176,7 @@ Para las salidas digitales se escogió una configuración de salida optoacoplada
 
 \begin{figure}[H]
 	\centering
-	\includegraphics[width=0.8\textwidth]{./Figures/SalidaDigital.pdf}
+	\includegraphics[width=0.7\textwidth]{./Figures/SalidaDigital.pdf}
 	\caption{Diagrama esquemático de una salida digital y la salida de alimentación de 220 VAC.}
 	\label{fig:SalidaDigital}
 \end{figure}
@@ -532,7 +532,7 @@ Por otro lado, la figura \ref{fig:TransaccionesHTTP} muestra un diagrama de tran
 
 \begin{figure}[H]
 	\centering
-	\includegraphics[width=0.6\textwidth]{./Figures/TransaccionesHTTP.pdf}
+	\includegraphics[width=0.7\textwidth]{./Figures/TransaccionesHTTP.pdf}
 	\caption{Diagrama de transiciones entre el servidor web y el navegador.}
 	\label{fig:TransaccionesHTTP}
 \end{figure}

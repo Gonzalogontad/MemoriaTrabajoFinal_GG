@@ -13,17 +13,21 @@
 
 \section{Conclusiones generales }
 
-La idea de esta sección es resaltar cuáles son los principales aportes del trabajo realizado y cómo se podría continuar. Debe ser especialmente breve y concisa. Es buena idea usar un listado para enumerar los logros obtenidos.
+El presente trabajo surge de la necesidad de la empresa Posthac S.A. de automatizar un proceso de control de productos. Para ello, se diseñó e implementó un prototipo de banco de pruebas siguiendo un listado de requerimientos, los cuales se lograron cumplir en su totalidad.
 
-Algunas preguntas que pueden servir para completar este capítulo:
+En el desarrollo de este prototipo se aplicaron muchos de los conocimientos adquiridos a lo largo de la carrera de especialización. Entre los conocimientos aplicados, se pueden destacar los adquiridos en las siguientes asignaturas:
 
 \begin{itemize}
-\item ¿Cuál es el grado de cumplimiento de los requerimientos?
-\item ¿Cuán fielmente se puedo seguir la planificación original (cronograma incluido)?
-\item ¿Se manifestó algunos de los riesgos identificados en la planificación? ¿Fue efectivo el plan de mitigación? ¿Se debió aplicar alguna otra acción no contemplada previamente?
-\item Si se debieron hacer modificaciones a lo planificado ¿Cuáles fueron las causas y los efectos?
-\item ¿Qué técnicas resultaron útiles para el desarrollo del proyecto y cuáles no tanto?
+\item Gestión de proyectos: seguir un plan de proyecto desde el comienzo, hizo posible identificar desvíos y tomar medidas correctivas logrando así cumplir con el alcance del proyecto a pesar de las demoras ocurridas.
+\item Ingeniería de software: se aplicaron conceptos de modularización y reutilización de código, uso de patrones de diseño y control de versiones.
+\item Protocolos de comunicación en sistemas embebidos: se utilizaron protocolos de comunicación serie y de redes inalámbricas WIFI, afianzando así los conocimientos sobre la temática.
+\item Sistemas operativos de tiempo real: la parte más importante del software se desarrolló sobre un RTOS, y se aplicaron conceptos de sincronización y comunicación de tareas y uso compartido de recursos.
+\item Diseño de Circuitos Impresos: Se diseñaron y fabricaron circuitos impresos utilizando las técnicas y el software enseñados en la asignatura.
 \end{itemize}
+
+En cuanto al cumplimiento de los objetivos, el prototipo permite la reducción de tiempos que se buscaba, ya que puede realizar hasta seis pruebas a la vez requiriendo una mínima o nula intervención del operario durante el proceso. De este modo se desliga al operario de la responsabilidad de efectuar mediciones y así poder realizar otras tareas en simultaneo, como la desconexión de equipos ya probados y conexión de equipos a probar. Además, el echo de que el operario no necesite hacer mediciones supone una mejora de la calidad del proceso debido a que reduce la posibilidad del error humano en las mediciones.
+
+
 
 
 %----------------------------------------------------------------------------------------
@@ -31,4 +35,10 @@ Algunas preguntas que pueden servir para completar este capítulo:
 %----------------------------------------------------------------------------------------
 \section{Próximos pasos}
 
-Acá se indica cómo se podría continuar el trabajo más adelante.
+Con el objetivo de mejorar la calidad de los controles y la trazabilidad de fallas de todas las líneas de productos que se fabrican en la empresa, se pueden identificar las siguientes oportunidades de mejora y ampliación:
+
+\begin{itemize}
+\item Desarrollo de un módulo adicional y software para prueba de sensores de movimiento infrarrojo pasivos.
+\item Desarrollo de un módulo adicional para prueba de entrada de drivers de LEDs con mediciones de potencia, factor de potencia y distorsión armónica.
+\item Integración del banco de pruebas con una base de datos para recolectar resultados a fin de obtener datos estadísticos en forma automática.
+\end{itemize}
